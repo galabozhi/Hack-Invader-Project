@@ -7,11 +7,32 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="game-wrapper">
+  <section id="home-screen" class="home-screen">
+    <div class="home-card">
+      <p class="home-tag">Hack Invaders</p>
+      <h1 class="home-title">PONG</h1>
+      <p class="home-subtitle">Choose your game mode</p>
+
+      <div class="mode-buttons">
+        <button type="button" id="btn-single" class="mode-btn mode-btn--single">
+          <span class="mode-btn__label">Single Player</span>
+          <span class="mode-btn__hint">Play vs CPU · W / S to move</span>
+        </button>
+        <button type="button" id="btn-multi" class="mode-btn mode-btn--multi">
+          <span class="mode-btn__label">Multiplayer</span>
+          <span class="mode-btn__hint">2 players · W/S and I/K or arrows</span>
+        </button>
+      </div>
+
+      <p class="home-footer">First to <strong>11</strong> wins</p>
+    </div>
+  </section>
+
+  <div id="game-screen" class="game-wrapper" hidden>
     <header class="hud">
       <div class="score">
         <span id="score-left" class="score-value">0</span>
-        <span class="score-label">YOU</span>
+        <span id="score-left-label" class="score-label">YOU</span>
       </div>
       <div class="title-block">
         <h1>PONG</h1>
@@ -19,7 +40,7 @@
       </div>
       <div class="score score-right">
         <span id="score-right" class="score-value">0</span>
-        <span class="score-label">CPU</span>
+        <span id="score-right-label" class="score-label">CPU</span>
       </div>
     </header>
 
@@ -29,9 +50,10 @@
       <kbd>W</kbd><kbd>S</kbd> — left paddle &nbsp;·&nbsp;
       <kbd>↑</kbd><kbd>↓</kbd> or <kbd>I</kbd><kbd>K</kbd> — right (2P) &nbsp;·&nbsp;
       <kbd>Space</kbd> — serve &nbsp;·&nbsp;
-      <kbd>1</kbd> / <kbd>2</kbd> — players &nbsp;·&nbsp;
       First to <strong>11</strong> wins
     </footer>
+
+    <button type="button" id="btn-home" class="btn-home">← Main Menu</button>
   </div>
 
   <script src="pong.js"></script>

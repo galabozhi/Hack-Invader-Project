@@ -1,7 +1,14 @@
+const homeScreen = document.getElementById("home-screen");
+const gameScreen = document.getElementById("game-screen");
+const btnSingle = document.getElementById("btn-single");
+const btnMulti = document.getElementById("btn-multi");
+const btnHome = document.getElementById("btn-home");
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 const scoreLeftEl = document.getElementById("score-left");
 const scoreRightEl = document.getElementById("score-right");
+const scoreLeftLabelEl = document.getElementById("score-left-label");
+const scoreRightLabelEl = document.getElementById("score-right-label");
 const statusEl = document.getElementById("status");
 
 const W = canvas.width;
@@ -69,7 +76,14 @@ function scorePoint(side) {
   if (state.scores[side] >= WIN_SCORE) {
     state.running = false;
     state.paused = true;
-    const winner = side === 0 ? "You win!" : state.mode === "cpu" ? "CPU wins!" : "Player 2 wins!";
+    const winner =
+      side === 0
+        ? state.mode === "cpu"
+          ? "You win!"
+          : "Player 1 wins!"
+        : state.mode === "cpu"
+          ? "CPU wins!"
+          : "Player 2 wins!";
     statusEl.textContent = `${winner} — Space to play again`;
     return;
   }
@@ -231,15 +245,40 @@ function tick() {
 
 function setMode(mode) {
   state.mode = mode;
-  document.querySelector(".score-right .score-label").textContent =
-    mode === "cpu" ? "CPU" : "P2";
+  scoreLeftLabelEl.textContent = mode === "cpu" ? "YOU" : "P1";
+  scoreRightLabelEl.textContent = mode === "cpu" ? "CPU" : "P2";
   statusEl.textContent =
     mode === "cpu"
-      ? "1-player vs CPU — Space to start"
-      : "2-player — I/K for right paddle — Space to start";
+      ? "Single player — Space to start"
+      : "Multiplayer — Space to start";
 }
 
+function showHome() {
+  homeScreen.hidden = false;
+  gameScreen.hidden = true;
+  state.running = false;
+  state.paused = true;
+  keys.clear();
+}
+
+function startGame(mode) {
+  setMode(mode);
+  homeScreen.hidden = true;
+  gameScreen.hidden = false;
+  state.scores = [0, 0];
+  updateScores();
+  state.paddles[0].y = H / 2 - PADDLE_H / 2;
+  state.paddles[1].y = H / 2 - PADDLE_H / 2;
+  resetBall();
+}
+
+btnSingle.addEventListener("click", () => startGame("cpu"));
+btnMulti.addEventListener("click", () => startGame("two"));
+btnHome.addEventListener("click", showHome);
+
 document.addEventListener("keydown", (e) => {
+  if (gameScreen.hidden) return;
+
   const k = e.key.toLowerCase();
   keys.add(k);
 
@@ -247,13 +286,11 @@ document.addEventListener("keydown", (e) => {
     e.preventDefault();
     serve();
   }
-  if (k === "1") setMode("cpu");
-  if (k === "2") setMode("two");
 });
 
 document.addEventListener("keyup", (e) => {
+  if (gameScreen.hidden) return;
   keys.delete(e.key.toLowerCase());
 });
 
-resetBall();
 tick();
