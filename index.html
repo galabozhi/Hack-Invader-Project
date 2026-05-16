@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pong</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="game-wrapper">
+    <header class="hud">
+      <div class="score">
+        <span id="score-left" class="score-value">0</span>
+        <span class="score-label">YOU</span>
+      </div>
+      <div class="title-block">
+        <h1>PONG</h1>
+        <p id="status" class="status">Press Space to start</p>
+      </div>
+      <div class="score score-right">
+        <span id="score-right" class="score-value">0</span>
+        <span class="score-label">CPU</span>
+      </div>
+    </header>
+
+    <canvas id="game" width="900" height="520" aria-label="Pong game board"></canvas>
+
+    <footer class="controls">
+      <kbd>W</kbd><kbd>S</kbd> — left paddle &nbsp;·&nbsp;
+      <kbd>↑</kbd><kbd>↓</kbd> or <kbd>I</kbd><kbd>K</kbd> — right (2P) &nbsp;·&nbsp;
+      <kbd>Space</kbd> — serve &nbsp;·&nbsp;
+      <kbd>1</kbd> / <kbd>2</kbd> — players &nbsp;·&nbsp;
+      First to <strong>11</strong> wins
+    </footer>
+  </div>
+
+  <script src="pong.js"></script>
+</body>
+</html>
